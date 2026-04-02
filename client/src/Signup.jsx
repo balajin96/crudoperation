@@ -4,7 +4,7 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 
-const API = "http://localhost:5000/api";
+const API = VITE_SERVER_URL || VITE_BACKEND_URL;
 
 const schema = z.object({
     email: z.string().email('Enter a valid email address'),

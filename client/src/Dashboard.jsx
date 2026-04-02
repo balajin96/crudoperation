@@ -5,7 +5,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const API = VITE_SERVER_URL || VITE_BACKEND_URL;
+const API = import.meta.env.VITE_SERVER_URL ||
+  import.meta.env.VITE_BACKEND_URL;
 
 const userSchema = z.object({
     employeeName: z.string().min(3, "Username must be at least 3 characters"),

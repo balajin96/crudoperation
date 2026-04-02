@@ -4,7 +4,8 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-const API = VITE_SERVER_URL || VITE_BACKEND_URL;
+const API = import.meta.env.VITE_SERVER_URL ||
+  import.meta.env.VITE_BACKEND_URL;
 const schema = z.object({
     email: z.string().email('Enter a valid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters'),

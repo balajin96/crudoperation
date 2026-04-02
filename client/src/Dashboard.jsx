@@ -40,7 +40,7 @@ const Dashboard = () => {
         getUsers();
         const storedEmail = localStorage.getItem('userEmail') ?? '';
         // const storedToken = localStorage.getItem('authToken') ?? '';
-        setUserEmail(storedEmail);
+        setUserEmail(storedEmail)
     }, []);
 
     const handleLogout = () => {

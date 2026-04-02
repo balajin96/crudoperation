@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
-
-const API = import.meta.env.VITE_SERVER_URL ||
-    import.meta.env.VITE_BACKEND_URL;
+import API from './apiConfig'
 
 const schema = z.object({
     email: z.string().email('Enter a valid email address'),
@@ -30,7 +27,7 @@ const Signup = () => {
     }, [status])
     const onSubmit = async formData => {
         try {
-            const res = await axios.post(`${API}/signup/`, formData);
+        const res = await API.post('/signup', formData);
             console.log(res);
 
             setStatus({ type: 'success', message: res.data?.message ?? 'Account created' })

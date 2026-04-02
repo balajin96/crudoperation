@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios from 'axios'
+import API from './apiConfig'
 import { useNavigate } from 'react-router-dom'
-const API = import.meta.env.VITE_SERVER_URL ||
-  import.meta.env.VITE_BACKEND_URL;
+
 const schema = z.object({
     email: z.string().email('Enter a valid email address'),
     password: z.string().min(6, 'Password must be at least 6 characters'),
@@ -29,7 +28,7 @@ const Login = () => {
     }, [status])
     const onSubmit = async formData => {
         try {
-            const res = await axios.post(`${API}/login/`, formData);
+            const res = await API.post('/login', formData);
             console.log(res);
 
             setStatus({ type: 'success', message: res.data?.message ?? 'Login successful' })

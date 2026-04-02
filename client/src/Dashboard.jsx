@@ -1,12 +1,9 @@
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
+import API from "./apiConfig";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API = import.meta.env.VITE_SERVER_URL ||
-  import.meta.env.VITE_BACKEND_URL;
 
 const userSchema = z.object({
     employeeName: z.string().min(3, "Username must be at least 3 characters"),
@@ -52,7 +49,7 @@ const Dashboard = () => {
 
     const getUsers = async () => {
         try {
-            const { data } = await axios.get(`${API}/getUserData`);
+        const { data } = await API.get('/getUserData');
             setUsers(data?.users ?? []);
         } catch (error) {
             console.error(error.message);
@@ -62,10 +59,10 @@ const Dashboard = () => {
     const onSubmit = async (formData) => {
         try {
             if (editUser) {
-                await axios.put(`${API}/modifyUserData/${editUser._id}`, formData);
+                await API.put(`/modifyUserData/${editUser._id}`, formData);
             }
             else {
-                await axios.post(`${API}/createUserData`, formData);
+                await API.post('/createUserData', formData);
             }
 
 
@@ -91,7 +88,7 @@ const Dashboard = () => {
         console.log(id);
 
         try {
-            await axios.delete(`${API}/deleteUser/${id}`);
+            await API.delete(`/deleteUser/${id}`);
             if (editUser?._id === id) {
                 setEditUser(null);
                 reset(defaultValues);

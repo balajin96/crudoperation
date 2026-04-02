@@ -23,6 +23,6 @@ app.use('/api/deleteUser/', router)
 app.use('/api/', router)
 app.use('/api/',router)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT ||process.env.BACKEND_URL
 app.listen(PORT, () => { console.log(`backend is running ${PORT}`) });
 

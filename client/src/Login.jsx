@@ -29,7 +29,7 @@ const Login = () => {
     }, [status])
     const onSubmit = async formData => {
         try {
-            const res = await axios.post(`${API}/api/login/`, formData);
+            const res = await axios.post(`${API}/login/`, formData);
             console.log(res);
 
             setStatus({ type: 'success', message: res.data?.message ?? 'Login successful' })

@@ -30,7 +30,7 @@ const Signup = () => {
     }, [status])
     const onSubmit = async formData => {
         try {
-            const res = await axios.post(`${API}/api/signup/`, formData);
+            const res = await axios.post(`${API}/signup/`, formData);
             console.log(res);
 
             setStatus({ type: 'success', message: res.data?.message ?? 'Account created' })

@@ -52,7 +52,7 @@ const Dashboard = () => {
 
     const getUsers = async () => {
         try {
-            const { data } = await axios.get(`${API}/api/getUserData`);
+            const { data } = await axios.get(`${API}/getUserData`);
             setUsers(data?.users ?? []);
         } catch (error) {
             console.error(error.message);
@@ -62,10 +62,10 @@ const Dashboard = () => {
     const onSubmit = async (formData) => {
         try {
             if (editUser) {
-                await axios.put(`${API}/api/modifyUserData/${editUser._id}`, formData);
+                await axios.put(`${API}/modifyUserData/${editUser._id}`, formData);
             }
             else {
-                await axios.post(`${API}/api/createUserData`, formData);
+                await axios.post(`${API}/createUserData`, formData);
             }
 
 
@@ -91,7 +91,7 @@ const Dashboard = () => {
         console.log(id);
 
         try {
-            await axios.delete(`${API}/api/deleteUser/${id}`);
+            await axios.delete(`${API}/deleteUser/${id}`);
             if (editUser?._id === id) {
                 setEditUser(null);
                 reset(defaultValues);

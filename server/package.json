@@ -6,7 +6,6 @@
   "type": "module",
   "scripts": {
     "start": "cross-env DEBUG=express:* nodemon index.js",
-     "build": "set NODE_ENV=production && node index.js",
     "dev": "cross-env DEBUG=express:* nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

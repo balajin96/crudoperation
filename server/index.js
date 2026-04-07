@@ -4,11 +4,23 @@ import cors from 'cors'
 import dbconnection from './src/configs/dbconfig.js';
 import router from './src/routes/route.js';
 
-const app = express();
 dotenv.config();
-// dbconnection();
 
-// connect DB safely (Vercel fix)
+const app = express();
+
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://client-crudoperation.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+};
+
+// ✅ 1. CORS must be first — before everything including DB middleware
+app.use(cors(corsOptions));
+
 let isConnected = false;
 const connectDB = async () => {
   if (isConnected) return;
@@ -21,39 +33,16 @@ app.use(async (req, res, next) => {
   next();
 });
 
-
-//middelware
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://client-crudoperation.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
-app.options("*", cors());
-
-// handle preflight
-app.options('*', cors());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routes
-app.use('/api/createUserData/', router)
-app.use('/api/getUserData/', router);
-app.use('/api/modifyUserData/', router);
-app.use('/api/deleteUser/', router)
+// ✅ 3. Deduplicated routes
+app.use('/api', router);
 
-app.use('/api/', router)
-app.use('/api/', router)
-
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`backend is running ${PORT}`);
+    console.log(`backend is running on port ${PORT}`);
   });
 }
 

@@ -9,7 +9,9 @@ dotenv.config();
 dbconnection();
 
 //middelware
-app.use(cors());
+const corsOptions = { origin: true, credentials: true };
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 //routes
@@ -23,6 +25,6 @@ app.use('/api/deleteUser/', router)
 app.use('/api/', router)
 app.use('/api/',router)
 
-const PORT = process.env.PORT ||process.env.BACKEND_URL
+const PORT = process.env.PORT || 5000
 app.listen(PORT, () => { console.log(`backend is running ${PORT}`) });
 

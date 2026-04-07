@@ -6,7 +6,21 @@ import router from './src/routes/route.js';
 
 const app = express();
 dotenv.config();
-dbconnection();
+// dbconnection();
+
+// connect DB safely (Vercel fix)
+let isConnected = false;
+const connectDB = async () => {
+  if (isConnected) return;
+  await dbconnection();
+  isConnected = true;
+};
+
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 
 //middelware
 app.use(cors({

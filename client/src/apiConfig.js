@@ -3,7 +3,7 @@ import axios from 'axios';
 const rawUrl =
   import.meta.env.VITE_SERVER_URL ??
   import.meta.env.VITE_PUBLIC_SERVER_URL ??
-  'https://server-crudoperation.vercel.app/api/';
+  'https://server-crudoperation.vercel.app/api';
 
 const API_BASE_URL = rawUrl.replace(/\/$/, '');
 

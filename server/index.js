@@ -10,12 +10,16 @@ dbconnection();
 
 //middelware
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://client-crudoperation.vercel.app"
-    ],
-    credentials: true
+  origin: [
+    "http://localhost:5173",
+    "https://client-crudoperation.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
+app.options("*", cors());
 
 // handle preflight
 app.options('*', cors());

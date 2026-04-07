@@ -9,9 +9,16 @@ dotenv.config();
 dbconnection();
 
 //middelware
-const corsOptions = { origin: true, credentials: true };
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+// const corsOptions = { origin: true, credentials: true };
+// app.use(cors(corsOptions));
+// app.options('*', cors(corsOptions));
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    // "https://your-frontend.vercel.app"
+  ],
+  credentials: true
+}));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 //routes
@@ -28,3 +35,4 @@ app.use('/api/',router)
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => { console.log(`backend is running ${PORT}`) });
 
+export default app;

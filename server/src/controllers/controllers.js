@@ -5,39 +5,48 @@ import jwt from 'jsonwebtoken';
 export const createUser = async (req, res) => {
     const { employeeName, company } = req.body;
 
-    const newUser = new User({ employeeName, company });
+    const newUser = new User({
+        employeeName,
+        company,
+        owner: req.userId,
+    });
 
     try {
         await newUser.save();
-        return res.status(200).json({ message: " User data created successfully" });
+        return res.status(200).json({ message: "User data created successfully" });
     } catch (error) {
         return res.status(500).json({ message: "Error registered user", error: error.message })
     }
-
 }
 
 export const getUser = async (req, res) => {
     try {
-        const users = await User.find();
-        // console.log("⭐⭐⭐", users);
+        const users = await User.find({ owner: req.userId });
         return res.status(200).json({
             success: true,
-            message: ` user data fetched successfully`,
+            message: `User data fetched successfully`,
             users
         })
-
     } catch (error) {
-
+        return res.status(500).json({ message: "Error fetching user data", error: error.message });
     }
 }
 
 export const updateUser = async (req, res) => {
-
     const { id } = req.params;
     const { employeeName, company } = req.body;
 
     try {
-        const updatedUser = await User.findByIdAndUpdate(id, { employeeName, company }, { returnDocument: "after" });
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: id, owner: req.userId },
+            { employeeName, company },
+            { returnDocument: "after" }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User data not found or access denied" });
+        }
+
         return res.status(200).json({ message: "User updated successfully", user: updatedUser });
     } catch (error) {
         return res.status(500).json({ message: "Error updating user", error: error.message });
@@ -45,18 +54,20 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-
     const { id } = req.params;
     try {
-        const deleteData = await User.findByIdAndDelete(id);
+        const deleteData = await User.findOneAndDelete({ _id: id, owner: req.userId });
+        if (!deleteData) {
+            return res.status(404).json({ message: "User data not found or access denied" });
+        }
+
         return res.status(200).json({
             message: "server ✅: delete successfully",
             success: true,
             deleteData
         })
     } catch (error) {
-
-        return res.status(500).json({ message: "Error updating user", error: error.message });
+        return res.status(500).json({ message: "Error deleting user", error: error.message });
     }
 }
 

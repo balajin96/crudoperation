@@ -8,11 +8,13 @@ const userSchema = new mongoose.Schema({
     company: {
         type: String,
         required: true
-    }
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Signup',
+        required: true,
+    },
 }, { timestamps: true })
-
-// module.exports = mongoose.model('User', userSchema)
-// export default mongoose.model('User', userSchema)
 
 export const User = mongoose.model("User", userSchema);
 // export const Product = mongoose.model("Product", productSchema);

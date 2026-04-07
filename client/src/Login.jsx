@@ -52,7 +52,7 @@ const Login = () => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 <div>
-                    <p className="font-semibold text-green-300 text-sm uppercase tracking-[0.3em]">
+                    <p className="font-semibold text-yellow-300 text-sm uppercase tracking-[0.3em]">
                         Welcome Back
                     </p>
                     <h2 className="mt-3 font-bold text-white text-3xl">Login your account</h2>
@@ -115,8 +115,8 @@ const Login = () => {
                 <p className="text-slate-500 text-xs text-center">
                     By continuing you agree to our privacy policy & terms.
                 </p>
-                <a href="/" className="block text-emerald-400 hover:text-emerald-300 text-sm text-center hover:underline">
-                    Already have an account? Log in
+                <a href="/signup" className="block text-gray-400 hover:text-emerald-300 text-sm text-center hover:underline">
+                    if you dont have an account? Sign up
                 </a>
             </form>
         </div>
